@@ -1,6 +1,6 @@
-from getpass import getpass
-
 from bs4 import BeautifulSoup
+
+import sys, json
 
 import controle
 
@@ -43,8 +43,8 @@ def data_resumo(codigo, turma):
 
 
 def main():
-    login_ = input("LOGIN: ")
-    senha_ = getpass()
+    login_ = json.loads(sys.argv[1])
+    senha_ = json.loads(sys.argv[2])
     jsessionid = controle.login(login_, senha_, "Coordenacao")
     resultado_listagem = controle.chamada({"command": "CoordenacaoDisciplinasOfertadasListar"}, jsessionid).read()
     disciplinas = processa(listagem)
@@ -80,7 +80,7 @@ def processa_resumo(html):
 
 def resumo(disciplina, jsessionid):
     resultado_resumo = controle.chamada(data_resumo(disciplina.cod, disciplina.turma), jsessionid).read()
-    
+
     pass
 
 
